@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   forks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/04 14:30:19 by mafferre          #+#    #+#             */
+/*   Updated: 2024/11/04 14:45:01 by mafferre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 void	alloc_fork_array(t_program *program, t_philo *philo)
@@ -22,7 +34,6 @@ void	create_fork_mutexes(t_program *program, t_philo *philo, int i)
 
 void	give_fork_to_philos(t_program *program, t_philo *philo, int i)
 {
-
 	while (i < program->nbr_philos)
 	{
 		philo[i].left_fork = &philo->forks[i];
@@ -33,7 +44,6 @@ void	give_fork_to_philos(t_program *program, t_philo *philo, int i)
 
 void	call_forks(t_program *program, t_philo *philo)
 {
-	
 	if (program->nbr_philos == 1)
 		program->one = 1;
 	program->philo = philo;

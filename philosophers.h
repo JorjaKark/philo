@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/04 14:30:00 by mafferre          #+#    #+#             */
+/*   Updated: 2024/11/04 14:40:01 by mafferre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -50,13 +62,27 @@ struct					s_philo
 	t_program			*program;
 };
 
+// main
+void					init_philo_thread(t_philo *philo, t_program *program);
+void					params_mutexes_main_thread(t_program *program,
+							t_philo *philo, int argc, char **argv);
+void					monitor_thread_and_join(t_program *program,
+							t_philo *philo, pthread_t *monitor);
+int						main(int argc, char **argv);
 
-//main
-
+// check_stops_monitor
+int						does_simulation_stop_eat(t_philo *philo,
+							int num_philos);
+int						does_simulation_stop_dead(t_philo *philo);
 
 // checkers.c
 int						is_positive_number(char *str);
 int						is_valid_int_max_min(long nbr);
+
+// eat_sleep_think.c
+int						eat(t_philo *philo);
+int						sleeping(t_philo *philo);
+int						think(t_philo *philo);
 
 // forks.c
 void					alloc_fork_array(t_program *program, t_philo *philo);
@@ -64,54 +90,50 @@ void					create_fork_mutexes(t_program *program, t_philo *philo,
 							int i);
 void					give_fork_to_philos(t_program *program, t_philo *philo,
 							int i);
-void	call_forks(t_program *program, t_philo *philo);
+void					call_forks(t_program *program, t_philo *philo);
 
 // ft_fprintf.c
 void					ft_putstr_fd(int fd, char *str);
 int						ft_fprintf(int fd, char *str);
 
-// ft_libft.c
-int						ft_strlen(char *str);
-int						ft_isdigit(int c);
-long					ft_atol(const char *nbr);
-void *ft_memset(void *s, int c, size_t n);
-void params_mutexes_main_thread(t_program *program, t_philo *philo, int argc, char **argv);
-void    monitor_thread_and_join(t_program *program, t_philo *philo, pthread_t *monitor);
-//ft_libft_utils.c
+// ft_libft_utils.c
 int						skip_sign(const char *nbr, int i, int *sign);
 int						while_loop_atol(const char *nbr, int i, long *n,
 							int sign);
 
-// invalid_params.c
-void					invalid_nbr_of_parameters(int *ret);
+// ft_libft.c
+int						ft_strlen(char *str);
+int						ft_isdigit(int c);
+long					ft_atol(const char *nbr);
+void					*ft_memset(void *s, int c, size_t n);
+
+// init_philos.c
+void					init_philo_mutexes(t_philo *philo);
+void					set_philo_params(t_philo *philo, char **argv, int id);
+void					set_philo_optional_params(t_philo *philo, char **argv,
+							int argc);
+
+// init_program.c
+void					init_program_mutexes(t_program *program);
+void					init_program(t_program *program, t_philo *philo,
+							int num_philos, char **argv);
+
+// invalid1.c
 void					invalid_philo_nbr(int *ret);
 void					invalid_time_to_die(int *ret);
 void					invalid_time_to_eat(int *ret);
 void					invalid_time_to_sleep(int *ret);
 void					invalid_nbr_of_meals_per_philo(int *ret);
+
+// invalid2.c
+void					invalid_nbr_of_parameters(void);
 void					invalid_integer(int *ret);
 
-// main.c
-void					init_program_mutexes(t_program *program);
-void					init_philo_mutexes(t_philo *philo);
-void					set_philo_params(t_philo *philo, char **argv, int id);
-void					set_philo_optional_params(t_philo *philo, char **argv,
-							int argc);
-void					init_philo_thread(t_philo *philo, t_program *program);
-void					while_loop(t_program *program, t_philo *philo, int argc,
-							char **argv);
-void					init_program(t_program *program, t_philo *philo,
-							int num_philos, char **argv);
-void					manage_threads(t_program *program, t_philo *philo,
-							pthread_t *monitor);
-int						main(int argc, char **argv);
-
-// monitor.c
+// monitor_utils.c
 void					set_simulation_stopped(t_program *program);
 int						is_simulation_stopped(t_program *program);
-int						does_simulation_stop_eat(t_philo *philo,
-							int num_philos);
-int						does_simulation_stop_dead(t_philo *philo);
+
+// monitor.c
 int						handle_philo_death(t_program *program, int philo_index);
 int						handle_all_eaten(t_program *program, int philo_index,
 							int num_philos);
@@ -120,14 +142,18 @@ int						monitor_philo_state(t_program *program,
 void					*does_simulation_stop_at_all_thread(void *arg);
 
 // routine.c
-int						try_take_right_fork(t_philo *philo, size_t start_time);
-int						take_forks(t_philo *philo);
 void					update_meal_state(t_philo *philo);
-int						eat(t_philo *philo);
-int						sleeping(t_philo *philo);
-int						think(t_philo *philo);
 int						check_meals_completed(t_philo *philo);
 void					*philo_dinner_thread(void *arg);
+
+// take_forks;
+int						take_first_fork(t_philo *philo,
+							pthread_mutex_t **first_fork,
+							pthread_mutex_t **second_fork);
+int						take_second_fork(t_philo *philo,
+							pthread_mutex_t *first_fork,
+							pthread_mutex_t *second_fork);
+int						take_forks(t_philo *philo);
 
 // utils.c
 size_t					get_time(void);
