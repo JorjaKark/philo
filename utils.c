@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:30:56 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 16:05:57 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:34:20 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	clean_exit(t_program *program, t_philo *philo)
 	while (++i < program->nbr_philos)
 	{
 		pthread_mutex_destroy(&program->philo->forks[i]);
-		pthread_mutex_destroy(&philo->last_meal_lock);
-		pthread_mutex_destroy(&philo->count_meals_lock);
 	}
-	ft_usleep(1);
+	pthread_mutex_destroy(&philo->last_meal_lock);
+	pthread_mutex_destroy(&philo->count_meals_lock);
+	//ft_usleep(1);
 	pthread_mutex_destroy(&program->write_lock);
 	pthread_mutex_destroy(&program->meal_lock);
 	pthread_mutex_destroy(&program->dead_lock);

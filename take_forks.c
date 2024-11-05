@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:36:14 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/05 12:53:25 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:53:54 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	take_second_fork(t_philo *philo, pthread_mutex_t *first_fork,
 			pthread_mutex_unlock(first_fork);
 			return (0);
 		}
-		ft_usleep((int)0.1);
+		ft_usleep(100);
 	}
 }
 
