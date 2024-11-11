@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:26:42 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 14:29:40 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:35:46 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,10 @@ int	validate_philo(t_program *program, t_philo *philo)
 	return (ret);
 }
 
-int	validate_input(t_program *program, t_philo *philo, int argc, char **argv)
+int	validate_input(t_program *program, t_philo *philo, char **argv)
 {
 	int	validation_result;
 
-	(void)argc;
 	program = malloc(sizeof(t_program));
 	program->nbr_philos = ft_atol(argv[1]);
 	philo->time_to_die = ft_atol(argv[2]);
@@ -93,8 +92,8 @@ int	validate_input(t_program *program, t_philo *philo, int argc, char **argv)
 	validation_result = validate_philo(program, philo);
 	if (!validation_result)
 	{
-		free(program);
 		return (0);
 	}
+	free(program);
 	return (validation_result);
 }

@@ -1,7 +1,7 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 
 SRCS = main.c check_stops_monitor.c checkers.c forks.c ft_fprintf.c ft_libft.c \
 ft_libft_utils.c invalid1.c invalid2.c monitor_utils.c monitor.c routine.c utils.c validate_input.c\

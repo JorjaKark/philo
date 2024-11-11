@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:30:52 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 14:30:53 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:38:10 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,6 @@ void	update_meal_state(t_philo *philo)
 	pthread_mutex_unlock(&philo->count_meals_lock);
 }
 
-int	check_meals_completed(t_philo *philo)
-{
-	if (philo->optional)
-	{
-		pthread_mutex_lock(&philo->program->meal_lock);
-		pthread_mutex_lock(&philo->count_meals_lock);
-		if (philo->count_meals >= philo->nbr_times_to_eat)
-		{
-			pthread_mutex_unlock(&philo->program->meal_lock);
-			return (1);
-		}
-		pthread_mutex_unlock(&philo->program->meal_lock);
-		pthread_mutex_unlock(&philo->count_meals_lock);
-	}
-	return (0);
-}
-
 void	*philo_dinner_thread(void *arg)
 {
 	t_philo	*philo;
@@ -48,8 +31,6 @@ void	*philo_dinner_thread(void *arg)
 		ft_usleep(3);
 	while (!is_simulation_stopped(philo->program))
 	{
-		if (check_meals_completed(philo))
-			break ;
 		if (!take_forks(philo))
 			break ;
 		if (!eat(philo))

@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:36:14 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 14:56:16 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:38:13 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@ int	take_first_fork(t_philo *philo, pthread_mutex_t **first_fork,
 }
 
 int	take_second_fork(t_philo *philo, pthread_mutex_t *first_fork,
-		pthread_mutex_t *second_fork)
+		pthread_mutex_t *second_fork, size_t start_time)
 {
-	size_t	start_time;
-
-	start_time = get_time();
 	while (1)
 	{
 		if (pthread_mutex_lock(second_fork) == 0)
@@ -49,12 +46,12 @@ int	take_second_fork(t_philo *philo, pthread_mutex_t *first_fork,
 			return (1);
 		}
 		if (is_simulation_stopped(philo->program) || get_time()
-			- start_time >= 1000)
+			- start_time >= 5000)
 		{
 			pthread_mutex_unlock(first_fork);
 			return (0);
 		}
-		ft_usleep((int)0.1);
+		ft_usleep(100);
 	}
 }
 
@@ -62,8 +59,12 @@ int	take_forks(t_philo *philo)
 {
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
+	size_t			start_time;
 
+	start_time = get_time();
 	if (!take_first_fork(philo, &first_fork, &second_fork))
 		return (0);
-	return (take_second_fork(philo, first_fork, second_fork));
+	if (!take_second_fork(philo, first_fork, second_fork, start_time))
+		return (0);
+	return (1);
 }

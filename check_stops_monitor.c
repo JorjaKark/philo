@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:30:09 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 14:44:12 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:40:44 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ int	does_simulation_stop_dead(t_philo *philo)
 	pthread_mutex_lock(&philo->last_meal_lock);
 	current_time = get_time();
 	time_since_last_meal = current_time - philo->last_meal;
-	if (time_since_last_meal >= (size_t)philo->time_to_die)
+	pthread_mutex_unlock(&philo->last_meal_lock);
+	if (time_since_last_meal > (size_t)philo->time_to_die)
 	{
-		pthread_mutex_unlock(&philo->last_meal_lock);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->last_meal_lock);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:24:45 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 14:49:06 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:50:52 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	num_philos = ft_atol(argv[1]);
-	if (!validate_input(NULL, &temp, argc, argv))
+	if (!validate_input(NULL, &temp, argv))
 		return (1);
 	philo = (t_philo *)malloc(sizeof(t_philo) * num_philos);
 	program = (t_program *)malloc(sizeof(t_program));

@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:30:48 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 14:54:50 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:28:56 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	*does_simulation_stop_at_all_thread(void *arg)
 				return (NULL);
 			i++;
 		}
-		ft_usleep(1);
 	}
 	return (NULL);
 }

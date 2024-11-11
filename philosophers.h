@@ -6,7 +6,7 @@
 /*   By: mafferre <mafferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:30:00 by mafferre          #+#    #+#             */
-/*   Updated: 2024/11/04 14:40:01 by mafferre         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:43:07 by mafferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int						take_first_fork(t_philo *philo,
 							pthread_mutex_t **second_fork);
 int						take_second_fork(t_philo *philo,
 							pthread_mutex_t *first_fork,
-							pthread_mutex_t *second_fork);
+							pthread_mutex_t *second_fork, size_t start_time);
 int						take_forks(t_philo *philo);
 
 // utils.c
@@ -167,6 +167,6 @@ int						validate_negative_times(t_philo *philo, int *ret);
 int						validate_limits(t_philo *philo);
 int						validate_philo(t_program *program, t_philo *philo);
 int						validate_input(t_program *program, t_philo *philo,
-							int argc, char **argv);
+							char **argv);
 
 #endif // PHILOSOPHERS_H
